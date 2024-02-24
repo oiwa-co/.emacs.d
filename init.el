@@ -2,7 +2,11 @@
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
 
+;; No more warnings :v
 (setq byte-compile-warnings '(cl-functions))
+
+;; SLIME LISP
+(setq inferior-lisp-program "sbcl")
 
 ;; Dashboard
 (use-package dashboard
@@ -10,15 +14,24 @@
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner 'official)
   (setq dashboard-banner-logo-title "L coder :)"))
-  (setq inhibit-startup-screen t)
+(setq inhibit-startup-screen t)
 
+;; modeline
+(use-package doom-modeline
+  :ensure t
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (setq doom-modeline-support-imenu t)
+  (setq doom-modeline-height 25)
+  (setq doom-modeline-icon t)
+  (setq doom-modeline-lsp-icon t))
 
 ;; Themes 
 (use-package modus-themes
   :ensure t
   :config
-  (modus-themes-load-theme 'modus-operandi))
-;; (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
+  (modus-themes-load-theme 'modus-operandi)
+  (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 ;; Auctex LaTex
 (use-package auctex
@@ -34,6 +47,7 @@
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
+;; close symbols
 (electric-pair-mode 1) 
 
 ;; ui things
@@ -42,7 +56,7 @@
 (scroll-bar-mode -1)
 
 ;; font
-(set-face-attribute 'default nil :font "JetBrains Mono-14:weight=Regular")
+(set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-14:weight=Regular")
 
 ;; Backups
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
@@ -63,7 +77,8 @@
   (ido-vertical-mode 1))
 
 ;; Relative numbers
-(setq display-line-numbers 'relative)
+(setq display-line-numbers-type 'relative) 
+(global-display-line-numbers-mode)
 
 ;; vim ci and co
 (use-package expand-region
@@ -82,8 +97,7 @@
 (use-package eglot
   :custom
   (eldoc-echo-area-use-multiline-p 3)
-  (eldoc-echo-area-display-truncation-message nil)
-  )
+  (eldoc-echo-area-display-truncation-message nil))
 
 (defun split-and-follow-horizontally ()
   (interactive)
@@ -98,4 +112,3 @@
   (balance-windows)
   (other-window 1))
 (global-set-key (kbd "C-x 3") 'split-and-follow-vertically)
-
