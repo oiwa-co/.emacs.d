@@ -1,1 +1,19 @@
+[window]
+opacity=0.9
 
+[font]
+size = 15.0
+
+[font.normal]
+family="JetBrains Mono"
+style="Regular"
+
+[cursor]
+blink_interval=225
+blink_timeout=0
+unfocused_hollow=false
+thickness=0.25
+
+[cursor.style]
+shape="Underline"
+blinking="Always"
