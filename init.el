@@ -6,6 +6,7 @@
 (setq byte-compile-warnings '(cl-functions))
 
 ;; SLIME LISP
+;; (load (expand-file-name "~/.quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "sbcl")
 
 ;; Dashboard
@@ -15,7 +16,7 @@
   (setq dashboard-startup-banner 'official)
   (setq dashboard-banner-logo-title "L coder :)"))
 (setq inhibit-startup-screen t)
-
+(setq initial-buffer-choice (lambda () (get-buffer-create "*dashboard*")))
 ;; modeline
 (use-package doom-modeline
   :ensure t
@@ -28,22 +29,18 @@
 
 ;; Themes 
 (use-package modus-themes
-  :ensure t
   :config
   (modus-themes-load-theme 'modus-operandi)
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
 ;; Auctex LaTex
 (use-package auctex
-  :ensure t
   :commands LaTeX-mode
   :hook (LaTeX-mode . (lambda ()
 			(push (list 'output-pdf "Zathura")
 			      TeX-view-program-selection))))
 ;; completion
 (use-package company
-  :ensure t
-  :defer t
   :config
   (add-hook 'after-init-hook 'global-company-mode))
 
@@ -54,6 +51,7 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+(setq scroll-step 1)
 
 ;; font
 (set-face-attribute 'default nil :font "JetBrainsMono Nerd Font-14:weight=Regular")
@@ -80,16 +78,7 @@
 (setq display-line-numbers-type 'relative) 
 (global-display-line-numbers-mode)
 
-;; vim ci and co
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
-
-(use-package change-inner
-  :bind ("M-i" . change-inner)
-  ("M-o" . change-outer))
-
 (use-package org-bullets
-  :ensure t
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
