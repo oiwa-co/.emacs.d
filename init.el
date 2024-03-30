@@ -81,18 +81,13 @@
   (modus-themes-load-theme 'modus-operandi)
   (define-key global-map (kbd "<f5>") #'modus-themes-toggle))
 
-(add-to-list 'default-frame-alist '(alpha-background . 95)) ;; For all new frames henceforth
+(add-to-list 'default-frame-alist '(alpha-background . 95)) 
 (set-face-attribute 'default nil
-                    :font "UbuntuMono Nerd Font" ;; Set your favorite type of font or download JetBrains Mono
+                    :font "UbuntuMono Nerd Font" 
                     :height 140
                     :weight 'Regular)
-(add-to-list 'default-frame-alist '(font . "JetBrains Mono-14"))
 
-;; This sets the default font on all graphical frames created after restarting Emacs.
-;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
-;; are not right unless I also add this method of setting the default font.
-
-;;(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;; Set your favorite font
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono")) ;
 (setq-default line-spacing 0.12)
 
 (use-package emacs
@@ -149,12 +144,6 @@
   :ensure nil
   :after org)
 
-;; (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
-
-;; (require 'start-multiFileExample)
-
-;; (start/hello)
-
 (use-package nerd-icons
   :if (display-graphic-p))
 
@@ -182,12 +171,7 @@
   (corfu-popupinfo-mode t)       ;; Enable popup information
   (corfu-popupinfo-delay 0.5)    ;; Lower popupinfo delay to 0.5 seconds from 2 seconds
   (corfu-separator ?\s)          ;; Orderless field separator, Use M-SPC to enter separator
-  ;; (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  ;; (corfu-quit-no-match nil)      ;; Never quit, even if there is no match
-  ;; (corfu-preview-current nil)    ;; Disable current candidate preview
-  ;; (corfu-preselect 'prompt)      ;; Preselect the prompt
-  ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+
   (completion-ignore-case t)
   ;; Enable indentation+completion using the TAB key.
   ;; `completion-at-point' is often bound to M-TAB.
@@ -206,11 +190,6 @@
 (use-package cape
   :after corfu
   :init
-  ;; Add to the global default value of `completion-at-point-functions' which is
-  ;; used by `completion-at-point'.  The order of the functions matters, the
-  ;; first function returning a result wins.  Note that the list of buffer-local
-  ;; completion functions takes precedence over the global list.
-  ;; The functions that are added later will be the first in the list
 
   (add-to-list 'completion-at-point-functions #'cape-dabbrev) ;; Complete word from current buffers
   (add-to-list 'completion-at-point-functions #'cape-dict) ;; Dictionary completion
@@ -269,32 +248,6 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
   :config
-  ;; Optionally configure preview. The default value
-  ;; is 'any, such that any key triggers the preview.
-  ;; (setq consult-preview-key 'any)
-  ;; (setq consult-preview-key "M-.")
-  ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
-
-  ;; For some commands and buffer sources it is useful to configure the
-  ;; :preview-key on a per-command basis using the `consult-customize' macro.
-  ;; (consult-customize
-  ;; consult-theme :preview-key '(:debounce 0.2 any)
-  ;; consult-ripgrep consult-git-grep consult-grep
-  ;; consult-bookmark consult-recent-file consult-xref
-  ;; consult--source-bookmark consult--source-file-register
-  ;; consult--source-recent-file consult--source-project-recent-file
-  ;; :preview-key "M-."
-  ;; :preview-key '(:debounce 0.4 any))
-
-  ;; By default `consult-project-function' uses `project-root' from project.el.
-  ;; Optionally configure a different project root function.
-   ;;;; 1. project.el (the default)
-  ;; (setq consult-project-function #'consult--default-project--function)
-   ;;;; 2. vc.el (vc-root-dir)
-  ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
-   ;;;; 3. locate-dominating-file
-  ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-   ;;;; 4. projectile.el (projectile-project-root)
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-function (lambda (_) (projectile-project-root)))
    ;;;; 5. No project support
